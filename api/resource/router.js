@@ -5,6 +5,13 @@ const Resources = require('./model')
 
 const ResourcesRouter = express.Router()
 
+ResourcesRouter.get('/', (req, res, next) => { 
+  Resources.getResources()
+  .then((resources) => {
+    res.json(resources)
+  })
+  .catch(next)
+})
 
 ResourcesRouter.get('/:id', (req, res, next) => {
 const resource_id  = req.params.id
@@ -24,12 +31,4 @@ ResourcesRouter.post('/', (req, res, next) => {
   .catch(next)
 })
 
-ResourcesRouter.use((err, req, res, next) => { // eslint-disable-line
-    res.status(err.status || 500).json({
-      Aaaaaaa: 'Wompx2',
-      message: err.message,
-      stack: err.stack,
-    })
-  })
-  
 module.exports = ResourcesRouter;
